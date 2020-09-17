@@ -25,7 +25,7 @@ function showAllTasks() {
 }
 
 function addTask() {
-  const newTask = [];
+  const newTask = Object.create(tasks);
   const name = prompt('タスクを入力してください');
   newTask['name'] = name;
   const genre = prompt('ジャンルを入力してください');
