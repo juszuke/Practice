@@ -3,21 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>FizzBuzzApp</title>
-    <style>
-    </style>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <h1>FizzBuzz問題</h1>
     <form>
       <label for="fizznum">FizzNum:</label>
-      <input type="text" name="fizznum" id="fizznum"><br>
+      <input class="form" type="text" id="fizznum" placeholder="整数値を入力してください"><br>
       <label for="buzznum">BuzzNum:</label>
-      <input type="text" name="buzznum" id="buzznum"></p>
-      <button>実行
-      </button>
+      <input class="form" type="text" id="buzznum" placeholder="整数値を入力してください"><br>
+      <input type="button" id="button" value="実行">
     </form>
-    <p>【出力】</p>
-    <p id="output"></p>
+    <div id="output">
+      <p>【出力】</p>
+    </div>
     <script src="fizzbuzz.js"></script>
   </body>
 </html>
