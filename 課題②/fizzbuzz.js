@@ -24,7 +24,7 @@
     const y = Number(document.getElementById('buzznum').value);
 
     // // xかyが整数値でない場合はエラー判定
-    if (Number.isInteger(x && y) && (x && y)) {
+    if (Number.isInteger(x) && Number.isInteger(y) && (x && y)) {
       // ループ処理
       for (let i =1; i < 100; i++) {
         // FizzBuzzの結果を判定
