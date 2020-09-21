@@ -2,43 +2,49 @@
 
 {
 
-  // p要素を作成
-  for (let i =1; i < 100; i++) {
+  // p要素を作成する関数
+  const createElem = (i) => {
     const elem = document.createElement('p');
-    elem.classList = 'cls'
+    elem.classList = 'list';
     elem.id = `output${i}`;
     document.getElementById('output').appendChild(elem);
-  }
+  };
 
   // ボタンをクリックしたら処理を実行
   document.getElementById('button').addEventListener('click', () => {
 
-    // 表示されている結果をブランクにする
-    for (let i =1; i < 100; i++) {
-      const output = document.getElementById(`output${i}`);
-      output.textContent = '';
-    }
+    // 出力結果を削除する
+    const parent = document.getElementById('output');
+    while(parent.firstChild){
+      parent.removeChild(parent.firstChild);
+    };
 
     // フォームからFizzNum、BuzzNumの値を取得
-    const x = Number(document.getElementById('fizznum').value);
-    const y = Number(document.getElementById('buzznum').value);
+    const fizznum = Number(document.getElementById('fizznum').value);
+    const buzznum = Number(document.getElementById('buzznum').value);
 
     // // xかyが整数値でない場合はエラー判定
-    if (Number.isInteger(x) && Number.isInteger(y) && (x && y)) {
+    if (Number.isInteger(fizznum) && Number.isInteger(buzznum) && (fizznum && buzznum)) {
       // ループ処理
       for (let i =1; i < 100; i++) {
         // FizzBuzzの結果を判定
-        const output = document.getElementById(`output${i}`);
-        if (i % x == 0 && i % y == 0){
+        if (i % fizznum == 0 && i % buzznum == 0){
+          createElem(i)
+          const output = document.getElementById(`output${i}`);
           output.textContent = `FizzBuzz ${i}`;
-        } else if (i % x == 0){
+        } else if (i % fizznum == 0){
+          createElem(i)
+          const output = document.getElementById(`output${i}`);
           output.textContent = `Fizz ${i}`;
-        } else if (i % y == 0){
+        } else if (i % buzznum == 0){
+          createElem(i)
+          const output = document.getElementById(`output${i}`);
           output.textContent = `Buzz ${i}`;
         }
       }
     } else {
       // エラーの結果を追加
+      createElem(1);
       const output = document.getElementById('output1');
       output.textContent = '整数値を入力してください';
     }
