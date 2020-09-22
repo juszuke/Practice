@@ -6,32 +6,39 @@
     constructor(text) {
       this.text = text
       this.status = '作業中';
-      this.delete = '削除';
     }
   }
   
   // タスク一覧
   const tasks = [];
   
-  // ボタンをクリックしたら処理を実行する
-  document.getElementById('add').addEventListener('click', () => {
-
-    // 出力結果を削除する
-    const parent = document.getElementById('list');
-    while(parent.firstChild){
-      parent.removeChild(parent.firstChild);
-    };
-    
-    // 新規タスクを登録する
-    const text = document.getElementById('task').value;
+  // 新規タスクを登録する機能
+  const addTask = () => {
+    const text = document.getElementById('text').value;
     const newTask = new Task(text);
     tasks.push(newTask);
+
+    // フォームをブランクにする
+    const textForm = document.getElementById('text');
+    textForm.value = ''
+  }
     
-    // タスク一覧を表示する
+    
+  // 出力結果を全て削除する機能
+  const removeAllTasks = () => {
+    const parent = document.getElementById('list');
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    };
+  }
+  
+  // タスク一覧を表示する機能
+  const showAllTaks = () => {
     tasks.forEach ((task,index) => {
       // tr要素を作成する
       let table = document.getElementById('list');
       let newRow = table.insertRow();
+      newRow.id = `task${index}`;
       
       // td要素を作成する
       // ID
@@ -55,12 +62,30 @@
       newCell = newRow.insertCell();
       newButton = document.createElement('input');
       newButton.type = 'button'
+      newButton.id = 'delete'
       newButton.value = '削除'
       newCell.appendChild(newButton);
     });
-
-    // フォームをブランクにする
-    const textForm = document.getElementById('task');
-    textForm.value = ''
+  }
+  
+  showAllTaks();
+  
+  // 新規タスクを登録する
+  document.getElementById('add').addEventListener('click', () => {
+    addTask();
+    removeAllTasks();
+    showAllTaks();
+  });
+  
+  // タスク削除する
+  document.getElementById('list').addEventListener('click', e => {
+    if (e.target.value === '削除') {
+      const eventParent = e.target.parentNode;
+      const eventGrandParent = eventParent.parentNode;
+      const taskId = Number(eventGrandParent.firstChild.textContent);
+      tasks.splice(taskId,1);
+      removeAllTasks();
+      showAllTaks();
+    }
   });
 }
