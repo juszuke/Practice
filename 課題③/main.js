@@ -4,13 +4,17 @@
   // Taskクラス
   class Task {
     constructor(text) {
-      this.text = text
+      this.text = text;
       this.status = '作業中';
     }
   }
   
-  // タスク一覧
-  const tasks = [];
+  // タスク一覧の初期値
+  const tasks = [
+    new Task('川へ洗濯'),
+    new Task('山へ芝刈り'),
+    new Task('鬼ヶ島へ鬼退治'),
+  ];
   
   // 新規タスクを登録する機能
   const addTask = () => {
@@ -55,19 +59,21 @@
       newCell = newRow.insertCell();
       let newButton = document.createElement('input');
       newButton.type = 'button'
-      newButton.value = '作業中'
+      newButton.classList = 'status'
+      newButton.value = `${task.status}`
       newCell.appendChild(newButton);
       
       // 削除
       newCell = newRow.insertCell();
       newButton = document.createElement('input');
       newButton.type = 'button'
-      newButton.id = 'delete'
+      newButton.classList = 'delete'
       newButton.value = '削除'
       newCell.appendChild(newButton);
     });
   }
   
+  // タスク一覧を表示する
   showAllTaks();
   
   // 新規タスクを登録する
@@ -77,13 +83,36 @@
     showAllTaks();
   });
   
-  // タスク削除する
+  // クリックしたらボタンの機能を実行する
   document.getElementById('list').addEventListener('click', e => {
-    if (e.target.value === '削除') {
-      const eventParent = e.target.parentNode;
-      const eventGrandParent = eventParent.parentNode;
-      const taskId = Number(eventGrandParent.firstChild.textContent);
-      tasks.splice(taskId,1);
+    // タスクのIDを取得する機能
+    const eventParent = e.target.parentNode;
+    const eventGrandParent = eventParent.parentNode;
+    const taskId = Number(eventGrandParent.firstChild.textContent);
+
+    // タスクを削除する機能
+    if (e.target.classList == 'delete') {
+      const deleteTask = () => {
+        tasks.splice(taskId,1);
+      }
+
+      // タスクを削除する
+      deleteTask();
+      removeAllTasks();
+      showAllTaks();
+
+    } else if (e.target.classList == 'status') {
+      // タスクの状態を変更する機能
+      const changeStatus = () => {
+        if (e.target.value == '作業中') {
+          tasks[taskId].status = '完了';
+        } else if (e.target.value == '完了') {
+          tasks[taskId].status = '作業中'
+        }
+      }
+
+      // タスクの状態を変更する
+      changeStatus();
       removeAllTasks();
       showAllTaks();
     }
