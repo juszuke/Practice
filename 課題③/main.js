@@ -33,7 +33,7 @@
   }
   
   // タスク一覧を表示する機能
-  const showAllTaks = () => {
+  const showAllTasks = () => {
     tasks.forEach ((task,index) => {
       // tr要素を作成する
       let table = document.getElementById('list');
@@ -70,13 +70,13 @@
   }
   
   // タスク一覧を表示する
-  showAllTaks();
+  showAllTasks();
   
   // 新規タスクを登録する
   document.getElementById('add').addEventListener('click', () => {
     addTask();
     removeAllTasks();
-    showAllTaks();
+    showAllTasks();
   });
   
   // クリックしたらボタンの機能を実行する
@@ -87,7 +87,7 @@
     const taskId = Number(eventGrandParent.firstChild.textContent);
 
     // タスクを削除する機能
-    if (e.target.classList == 'delete') {
+    if (String(e.target.classList) === "delete") {
       const deleteTask = () => {
         tasks.splice(taskId,1);
       }
@@ -95,14 +95,14 @@
       // タスクを削除する
       deleteTask();
       removeAllTasks();
-      showAllTaks();
+      showAllTasks();
 
-    } else if (e.target.classList == 'status') {
+    } else if (String(e.target.classList) === 'status') {
       // タスクの状態を変更する機能
       const changeStatus = () => {
-        if (e.target.value == '作業中') {
+        if (e.target.value === '作業中') {
           tasks[taskId].status = '完了';
-        } else if (e.target.value == '完了') {
+        } else if (e.target.value === '完了') {
           tasks[taskId].status = '作業中'
         }
       }
@@ -110,7 +110,7 @@
       // タスクの状態を変更する
       changeStatus();
       removeAllTasks();
-      showAllTaks();
+      showAllTasks();
     }
   });
 }
