@@ -87,7 +87,7 @@
     const taskId = Number(eventGrandParent.firstChild.textContent);
 
     // タスクを削除する機能
-    if (String(e.target.classList) === "delete") {
+    if (String(e.target.classList) === 'delete') {
       const deleteTask = () => {
         tasks.splice(taskId,1);
       }
