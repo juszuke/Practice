@@ -10,11 +10,7 @@
   }
   
   // タスク一覧の初期値
-  const tasks = [
-    new Task('川へ洗濯'),
-    new Task('山へ芝刈り'),
-    new Task('鬼ヶ島へ鬼退治'),
-  ];
+  const tasks = [];
   
   // 新規タスクを登録する機能
   const addTask = () => {
