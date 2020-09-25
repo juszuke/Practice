@@ -12,6 +12,7 @@
   // タスク一覧の初期値
   const tasks = [];
   
+
   // 新規タスクを登録する機能
   const addTask = () => {
     const text = document.getElementById('text').value;
@@ -23,17 +24,18 @@
     textForm.value = ''
   }
     
-    
+
   // 出力結果を全て削除する機能
-  const removeAllTasks = () => {
+  const removeTasks = () => {
     const parent = document.getElementById('list');
     while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
     };
   }
   
+
   // タスク一覧を表示する機能
-  const showAllTasks = () => {
+  const showTasks = () => {
     tasks.forEach ((task,index) => {
       // tr要素を作成する
       let table = document.getElementById('list');
@@ -59,6 +61,16 @@
       newButton.value = `${task.status}`
       newCell.appendChild(newButton);
       
+      // 状態によってtd要素にクラスを設定する
+      const getTd = newButton.parentNode;
+      const getTr = getTd.parentNode;
+      
+      if (newButton.value === '作業中') {
+        getTr.classList ='working';
+      } else if (newButton.value === '完了') {
+        getTr.classList = 'completed';
+      }
+      
       // 削除
       newCell = newRow.insertCell();
       newButton = document.createElement('input');
@@ -66,20 +78,56 @@
       newButton.classList = 'delete'
       newButton.value = '削除'
       newCell.appendChild(newButton);
-    });
+    });  
+
+    // 特定の状態のtr要素を取得する
+    const working = document.getElementsByClassName('working');
+    const completed = document.getElementsByClassName('completed');
+
+    // 選択したラジオボタンに合わせて表示する項目を指定する
+    if (document.getElementById('all').checked) {
+      for (let i = 0; i < working.length; i++) {
+        working[i].classList.remove('none');
+      }
+    
+      for (let i = 0; i < completed.length; i++) {
+        completed[i].classList.remove('none');
+      }
+      
+    } else if (document.getElementById('working').checked) {
+      for (let i = 0; i < working.length; i++) {
+        working[i].classList.remove('none');
+      }
+
+      for (let i = 0; i < completed.length; i++) {
+        completed[i].classList.add('none');
+      }
+      
+    } else if (document.getElementById('completed').checked) {
+      for (let i = 0; i < working.length; i++) {
+        working[i].classList.add('none');
+      }
+    
+      for (let i = 0; i < completed.length; i++) {
+        completed[i].classList.remove('none');
+      }
+    }
   }
+
   
   // タスク一覧を表示する
-  showAllTasks();
+  showTasks();
+ 
   
   // 新規タスクを登録する
   document.getElementById('add').addEventListener('click', () => {
     addTask();
-    removeAllTasks();
-    showAllTasks();
+    removeTasks();
+    showTasks();
   });
+ 
   
-  // クリックしたらボタンの機能を実行する
+  // クリックしたら状態の変更と削除の機能を実行する
   document.getElementById('list').addEventListener('click', e => {
     // タスクのIDを取得する機能
     const eventParent = e.target.parentNode;
@@ -94,8 +142,8 @@
 
       // タスクを削除する
       deleteTask();
-      removeAllTasks();
-      showAllTasks();
+      removeTasks();
+      showTasks();
 
     } else if (String(e.target.classList) === 'status') {
       // タスクの状態を変更する機能
@@ -109,8 +157,52 @@
 
       // タスクの状態を変更する
       changeStatus();
-      removeAllTasks();
-      showAllTasks();
+      removeTasks();
+      showTasks();
+    }
+  });
+
+
+  // ラジオボタンですべてを選択した場合の処理
+  document.getElementById('all').addEventListener('click', () => {
+    removeTasks();
+    showTasks();
+
+    for (let i = 0; i < working.length; i++) {
+      working[i].classList.remove('none');
+    }
+
+    for (let i = 0; i < completed.length; i++) {
+      completed[i].classList.remove('none');
+    }
+  });
+  
+  // ラジオボタンで作業中を選択した場合の処理
+  document.getElementById('working').addEventListener('click', () => {
+    removeTasks();
+    showTasks();
+    
+    for (let i = 0; i < working.length; i++) {
+      working[i].classList.remove('none');
+    }
+    
+    for (let i = 0; i < completed.length; i++) {
+      completed[i].classList.add('none');
+    }
+  });
+  
+
+  // ラジオボタンで完了を選択した場合の処理
+  document.getElementById('completed').addEventListener('click', () => {
+    removeTasks();
+    showTasks();
+    
+    for (let i = 0; i < working.length; i++) {
+      working[i].classList.add('none');
+    }
+    
+    for (let i = 0; i < completed.length; i++) {
+      completed[i].classList.remove('none');
     }
   });
 }
