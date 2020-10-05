@@ -113,11 +113,11 @@
       }
     }
   }
-
   
+
   // タスク一覧を表示する
   showTasks();
- 
+  
   
   // 新規タスクを登録する
   document.getElementById('add').addEventListener('click', () => {
