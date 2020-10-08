@@ -12,7 +12,6 @@ const answers = document.getElementById('answers');
 const home = document.getElementById('home');
 
 const quizSet = [];
-const correct = 0;
 let currentNum = 0;
 let isAnswered;
 let score = 0;
@@ -92,7 +91,7 @@ const loadQuiz = () => {
     question.textContent = quizSet[currentNum].question;
     
     // correct_answerとincorrect_answersを結合してchoicesを作成する
-    let choices = quizSet[currentNum].incorrect_answers.concat(quizSet[currentNum].correct_answer);
+    const choices = quizSet[currentNum].incorrect_answers.concat(quizSet[currentNum].correct_answer);
     quizSet[currentNum]["choices"] = choices; // choicesをquizSetに追加する
     
     while(answers.firstChild) {
